@@ -64,5 +64,6 @@ Superuser created successfully.
 ### 启动工程
 python3.6 manage.py migrate  
   ...持续更新  
-  关于更多信息交流，欢迎关注我的公众账号:mukelaoshi或邮件联系jeson@imoocc.com ![图片名称](http://imoocc.com/static/zinnia_bootstrap/img/weixin.jpg)  
+  关于更多信息交流，欢迎关注我的公众账号:mukelaoshi或邮件联系jeson@imoocc.com 
+![图片名称](http://imoocc.com/static/zinnia_bootstrap/img/weixin.jpg)  
 
