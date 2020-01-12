@@ -17,3 +17,49 @@ http://www.jesonc.com/xadmin
 这是一个python的脚本(insert_work.py)，用于运维人员方便的在终端新建任务。
 
 
+## 部署方式
+### 安装基础服务  
+1、基础程序
+Mysql5.7
+Python3.6  
+nginx-1.16.1  
+2、安装模块  
+Django1.8  
+工程所需必要安装模块  
+pip -r install ./requirements.txt
+
+### 初始化Mysql及配置  
+1、mysql数据库及新建用户：  
+create database jcrontab;  
+CREATE USER jeson@'%' IDENTIFIED BY 'jesonc.com';  
+grant all privileges on jcrontab.* to  'jeson'@'%' with grant option;    
+2、修改djang配置settings.py中数据库配置信息
+DATABASES = {  
+        'default': {  
+        'ENGINE': 'django.db.backends.mysql',   # 数据库引擎  
+        'NAME': 'jcrontab',  # 数据库名，先前创建的  
+        'USER': 'jeson',     # 用户名，可以自己创建用户  
+        'PASSWORD': 'jesonc.com',  # 密码  
+        'HOST': '127.0.0.1',  # mysql服务所在的主机ip  
+        'PORT': '3306',         # mysql服务端口  
+        }  
+}
+3、初始化数据库模型  
+python3.6 manage.py makemigrations  
+python3.6 manage.py migrate
+
+### 创建xadmin后台用户密码
+python3.6 manage.py createsuperuser
+---
+Username (leave blank to use 'jeson'): jeson 
+Email address: jeson@imoocc.com
+Password: jesonc.com
+Password (again): jesonc.com
+Superuser created successfully.
+
+### 启动工程
+python3.6 manage.py migrate  
+  
+  关于更多信息交流，欢迎关注我的公众账号:mukelaoshi或邮件联系jeson@imoocc.com
+![图片名称](http://imoocc.com/static/zinnia_bootstrap/img/weixin.jpg)  
+
