@@ -1,0 +1,33 @@
+<!doctype html>
+{% load static %}
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>闪电侠定时任务系统</title>
+      <style>
+        body{
+        background:url({% static 'imgs/cwposter.png'%});
+        background-size:100%;
+        background-repeat:no-repeat;
+        }
+      </style>
+{% block script_content %}
+{% endblock %}
+  </head>
+  <body>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-8">
+          <h1 class="mt-2" style="color:wheat;" >闪电侠定时任务系统</h1>
+          <hr class="mt-0 mb-4">
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  <p>关于更多信息交流，欢迎关注我的公众账号:mukelaoshi及我的博客http:www.jesonc.com。</p>
+  </body>
+</html>

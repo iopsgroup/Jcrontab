@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <form class="form-inline" >
+    {% csrf_token %}
+  <div class="form-group">
+    <input type="text"  class="form-control" placeholder="{{taskname}}" aria-label="需求" aria-describedby="basic-addon1">
+    <button id="sub_fin" type="submit" class="btn btn-success" >终止</button>
+    <button id="sub_rec" type="submit" class="btn btn-success" >恢复</button>
+      <h6><span class="label label-warning" style="color:wheat">当前状态为：{% if taskstatus == 1 %}结单{% else %}运行{% endif %}</span></h6>
+  </div>
+  </form>
+  <form class="form-inline" >
+    {% csrf_token %}
+
+    <div class="form-group">
+    <input type="finsh" id="change_cycle" class="form-control" placeholder="{{taskcycle}}" aria-label="加急提醒频率" aria-describedby="basic-addon1">
+    <button type="push" id="sub_push" class="btn btn-danger" >加急</button>
+    <button type="push" id="sub_nopush" class="btn btn-danger" >恢复</button>
+    </div>
+  </form>
+
+    <table class="table table-dark">
+      <thead>
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">催单时间</th>
+          <th scope="col">截止时间</th>
+          <th scope="col">负责人</th>
+          <th scope="col">需求内容</th>
+          <th scope="col">任务执行日志</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% for itemtask in queryset %}
+            <tr>
+              <th scope="row">{{itemtask.id}}</th>
+              <th scope="row">{{itemtask.time}}</th>
+              <td>{{itemtask.Demandorder_group.endtime}}</td>
+              <td>{{itemtask.Demandorder_group.workowner}}</td>
+              <td>{{itemtask.Demandorder_group.workcontent}}</td>
+              <td>{{itemtask.command_res}}</td>
+            </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}
+
+{% block script_content %}
+<script type="application/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+</script>
+<script>
+
+function Jecho(){
+    alert("test")
+}
+
+$(function () {
+  $("#sub_fin").click(function() {
+  $.ajax({
+      // 提交的地址
+      url: '/finshedtask',
+      // 提交的方式
+      type: 'post',
+      // 提交的数据
+      data: {'status': 1,'taskid':{{taskid}}},
+      // 回调函数
+      success: function (data) {  // data接收的就是异步提交返回的结果
+          alert(data)
+      }
+  });
+});
+
+    $("#sub_rec").click(function() {
+  $.ajax({
+      // 提交的地址
+      url: '/taskrestore',
+      // 提交的方式
+      type: 'post',
+      // 提交的数据
+      data: {'status': 0,'taskid':{{taskid}}},
+      // 回调函数
+      success: function (data) {  // data接收的就是异步提交返回的结果
+          alert(data)
+      }
+  });
+});
+
+        $("#sub_push").click(function() {
+  $.ajax({
+      // 提交的地址
+      url: '/tasknewcycle',
+      // 提交的方式
+      type: 'post',
+      // 提交的数据
+      {#data: {'newcycle': 'test'},#}
+      data: {'newcycle': $("#change_cycle").val(),'taskid':{{taskid}},'ispushed':1},
+      // 回调函数
+      success: function (data) {  // data接收的就是异步提交返回的结果
+          alert(data)
+      }
+  });
+});
+        $("#sub_nopush").click(function() {
+  $.ajax({
+      // 提交的地址
+      url: '/tasknopush',
+      // 提交的方式
+      type: 'post',
+      // 提交的数据
+      {#data: {'newcycle': 'test'},#}
+      data: {'taskid':{{taskid}},'ispushed':0},
+      // 回调函数
+      success: function (data) {  // data接收的就是异步提交返回的结果
+          alert(data)
+      }
+  });
+});
+
+
+})
+
+</script>
+{% endblock %}
+
+
+
