@@ -48,9 +48,15 @@ DATABASES = {
         }  
 }
   
-3、初始化数据库模型  
+3、初始化数据库模型 
+（1）注释settings.py下的如下配置
+CRONJOBS = todo()
+if CRONJOBS is None:
+    CRONJOBS = []
+（2）初始化数据库模型
 python3.6 manage.py makemigrations  
 python3.6 manage.py migrate
+（3）打开之前的注释
 
 ### 创建xadmin后台用户密码
 python3.6 manage.py createsuperuser
