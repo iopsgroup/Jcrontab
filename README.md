@@ -31,12 +31,15 @@ Django1.8
 pip -r install ./requirements.txt
 
 ### 初始化Mysql及配置  
-1、mysql数据库及新建用户：  
+1、my.cnf设置数据库字符集
+character_set_server=utf8
+
+2、mysql数据库及新建用户：  
 create database jcrontab;  
 CREATE USER jeson@'%' IDENTIFIED BY 'jesonc.com';  
 grant all privileges on jcrontab.* to  'jeson'@'%' with grant option;    
-  
-2、修改djang配置settings.py中数据库配置信息
+
+3、修改djang配置settings.py中数据库配置信息
 DATABASES = {  
         'default': {  
         'ENGINE': 'django.db.backends.mysql',   # 数据库引擎  
@@ -48,15 +51,15 @@ DATABASES = {
         }  
 }
   
-3、初始化数据库模型 
-（1）注释settings.py下的如下配置
+4、初始化数据库模型 
+1）注释settings.py下的如下配置
 CRONJOBS = todo()
 if CRONJOBS is None:
     CRONJOBS = []
-（2）初始化数据库模型
+2）初始化数据库模型
 python3.6 manage.py makemigrations  
 python3.6 manage.py migrate
-（3）打开之前的注释
+3）打开（1）之前的注释
 
 ### 创建xadmin后台用户密码
 python3.6 manage.py createsuperuser
