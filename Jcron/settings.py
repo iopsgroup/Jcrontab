@@ -151,7 +151,7 @@ SERVICE_ADDR = '49.233.4.200:8000'
 
 from Jcrontab.utils.cron_list import todo
 
-CRONJOBS = [('*/1 * * * *', '/Users/jeson/PycharmProjects/Jcron/Jcrontab/script/test.sh')]
+#CRONJOBS = [('*/1 * * * *', '/Users/jeson/PycharmProjects/Jcron/Jcrontab/script/test.sh')]
 CRONJOBS = todo()
 if CRONJOBS is None:
     CRONJOBS = []

@@ -12,6 +12,12 @@ SCRIPT_DIR =  BASE_DIR + '/Jcrontab/script'
 
 
 def tasklistView(request,taskid):
+    '''
+    任务列表页
+    :param request:
+    :param taskid:
+    :return:
+    '''
     tasks = Demandorder_log.objects.filter(Demandorder_group_id=taskid).all().select_related()
     if tasks:
         taskitems = reversed(tasks)
@@ -30,6 +36,11 @@ def tasklistView(request,taskid):
     return render_to_response('task_list.html',{'queryset':taskitems,'taskname':taskname,'taskcycle':taskcycle,'taskid':taskid,'taskstatus':taskstatus})
 
 def taskfinshView(request):
+    '''
+    任务完成接口
+    :param request:
+    :return:
+    '''
     if request.method == 'POST':
         data = request.POST
         change_status = int(data.get('status'))
@@ -48,6 +59,11 @@ def taskfinshView(request):
         # print(recive_data)
 
 def taskrestoreView(request):
+    '''
+    恢复任务接口
+    :param request:
+    :return:
+    '''
     if request.method == 'POST':
         data = request.POST
         change_status = int(data.get('status'))
@@ -60,12 +76,18 @@ def taskrestoreView(request):
         else:
             taskitem.status = change_status
             taskitem.save()
+            os.system('/bin/sh %s/reload_cron.sh %s'%(SCRIPT_DIR,BASE_DIR))
             return_str = u"此单已恢复提醒！"
             return HttpResponse(return_str)
         # recive_data = json.loads(request.body)
         # print(recive_data)
 
 def tasknewcycleView(request):
+    '''
+    控制任务周期接口
+    :param request:
+    :return:
+    '''
     if request.method == 'POST':
         data = request.POST
         change_cycle = data.get('newcycle')
@@ -82,6 +104,11 @@ def tasknewcycleView(request):
             return HttpResponse(return_str)
 
 def tasknopushView(request):
+    '''
+    恢复原始任务周期接口
+    :param request:
+    :return:
+    '''
     if request.method == 'POST':
         data = request.POST
         taskid = int(data.get('taskid'))

@@ -29,18 +29,31 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'Jcron.settings')
 django.setup()
 
 def recordlog(taskid):
+    '''
+    方法：用于记录日志
+    :param taskid:
+    :return:
+    '''
     Demandorder_log.objects.create(Demandorder_group_id=taskid)
 
 def record_command_res(taskid,res):
+    '''
+    方法：用于记录任务返回的结果
+    :param taskid:
+    :param res:
+    :return:
+    '''
     Demandorder_log.objects.create(Demandorder_group_id=taskid,command_res=res)
 
 
-def do_command():
-    pass
-
 def sendinfo(data,taskid):
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'Jcron.settings')
-    django.setup()
+    '''
+    方法：通过调用企业微信接口发送文本、图片(调用sendimg接口)信息
+    :param data:
+    :param taskid:
+    :return:
+    '''
+
     headers = {
         # 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64)',
         # 'Host': 'jesonc.com',
@@ -60,6 +73,13 @@ def sendinfo(data,taskid):
 
 
 def getinfo(itemw,title='【通知需求】',change_cycle=''):
+    '''
+    方法：获取发送信息的模版
+    :param itemw:
+    :param title:
+    :param change_cycle:
+    :return:
+    '''
 
     dtime = time.strftime("%Y-%m-%d", time.localtime())
     xtime = time.strftime("%w", time.localtime())
@@ -82,6 +102,12 @@ def getinfo(itemw,title='【通知需求】',change_cycle=''):
     return CRONJOBS_item
 
 def sendimg(imgpath='',url=''):
+    '''
+    方法：发送通过企业微信群发机器人发送图片
+    :param imgpath:
+    :param url:
+    :return:
+    '''
 
     with open(imgpath, "rb") as f:
         fcontent = f.read()
@@ -106,6 +132,14 @@ def sendimg(imgpath='',url=''):
     os.system("curl %s -H %s -d '%s'" % (url, content_tpye,imgdata ))
 
 def commad_res(commands='',logfile='',notice_data='',taskid=''):
+    '''
+    方法：执行具体任务
+    :param commands:
+    :param logfile:
+    :param notice_data:
+    :param taskid:
+    :return:
+    '''
     command_list = set(commands.split())
     black_rules = ('rm','reboot','shutdown')
     equal_sets = command_list.intersection(black_rules)
@@ -138,6 +172,10 @@ def commad_res(commands='',logfile='',notice_data='',taskid=''):
 
 
 def todo():
+    '''
+    方法：初始化返回settings.py中CRONTAB所需的自动化任务列表
+    :return:
+    '''
     cronjobs = [('*/1 * * * *','/script/test2.sh')]
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'Jcron.settings')
     django.setup()

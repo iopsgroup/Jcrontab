@@ -1,12 +1,5 @@
 from django.db import models
 
-# Create your models here.
-class Person(models.Model):
-    name = models.CharField(max_length=130)
-    email = models.EmailField(blank=True)
-    job_title = models.CharField(max_length=30, blank=True)
-    bio = models.TextField(blank=True)
-
 
 class Demandorder(models.Model):
     TYPE_CHOICES = ((u'M',u'信息模式'),
@@ -20,18 +13,18 @@ class Demandorder(models.Model):
     extname = models.CharField(max_length=10,blank=True,verbose_name=u"绰号")
     workcontent = models.CharField(max_length=100,blank=True,verbose_name=u"工作内容")
     noticeurl = models.CharField(max_length=100,blank=True,verbose_name=u"企业微信通知URL")
-    status = models.IntegerField(default=0,verbose_name=u"当前处理状态")
+    status = models.IntegerField(default=0,verbose_name=u"任务状态")
     ispush = models.IntegerField(default=0,verbose_name=u"是否开启催单")
     command = models.CharField(max_length=100,blank=True,verbose_name=u"任务或命令")
-    workmode = models.CharField(max_length=20, choices=TYPE_CHOICES,default=u'M')
+    workmode = models.CharField(max_length=20, choices=TYPE_CHOICES,default=u'M',verbose_name=u"工作类型")
 
     class Meta:
         verbose_name = '任务表'
         verbose_name_plural = "任务表"
 
 class Demandorder_log(models.Model):
-    time = models.DateTimeField(auto_now=True,verbose_name="日志时间")
-    command_res = models.CharField(max_length=200,blank=True,verbose_name=u"命令")
+    time = models.DateTimeField(auto_now=True,verbose_name="任务时间")
+    command_res = models.CharField(max_length=200,blank=True,verbose_name=u"命令结果")
     Demandorder_group = models.ForeignKey(Demandorder,on_delete='CASCADE')
     class Meta:
         verbose_name = '日志表'
