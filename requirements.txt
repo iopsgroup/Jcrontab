@@ -22,7 +22,7 @@ odfpy==1.4.0
 openpyxl==3.0.2
 py2==0.1.0
 pytz==2019.3
-PyYAML==5.1.2
+PyYAML==5.4
 requests==2.22.0
 six==1.10.0
 sqlparse==0.3.0
